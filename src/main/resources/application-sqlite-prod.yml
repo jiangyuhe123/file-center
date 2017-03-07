@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:mydb.db
+  jpa:
+    database-platform: com.ajavac.config.SQLiteDialect
+    hibernate:
+      ddl-auto: update
