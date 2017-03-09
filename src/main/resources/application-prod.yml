@@ -9,3 +9,6 @@ spring:
     database-platform: com.ajavac.config.SQLiteDialect
     hibernate:
       ddl-auto: update
+logging:
+  file: springboot.log
+

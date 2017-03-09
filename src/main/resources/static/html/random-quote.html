@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <meta charset="UTF-8">
+    <title>宅言</title>
+</head>
+<style type="text/css">
+    body {
+        background-color: #16a085;
+        color: #16a085;
+        font-family: Georgia, "Times New Roman", "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", sans-serif;
+        font-weight: 400;
+        font-size: 1.8em;
+    }
+
+    .quote-box {
+        background-color: white;
+        border-radius: 3px;
+        position: relative;
+        margin: 8% auto auto auto;
+        width: 450px;
+        padding: 40px 50px;
+        display: table;
+    }
+
+    .quote-text i {
+        font-size: 1.3em;
+        margin-right: 0.3em;
+    }
+
+    .quote-author {
+        text-align: right;
+        margin: 5% auto auto auto;
+    }
+
+    .buttons {
+        width: 450px;
+        margin: 5% auto auto auto;
+        display: block;
+    }
+
+    .button {
+        height: 38px;
+        border: none;
+        border-radius: 3px;
+        color: #fff;
+        background-color: #16a085;
+        outline: none;
+        font-size: 0.85em;
+        padding: 8px 18px 6px 18px;
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    .quote-box .buttons .button:hover {
+        opacity: 0.8;
+    }
+
+    #tweet-quote {
+        float: left;
+        padding: 0px;
+        padding-top: 5px;
+        text-align: center;
+        font-size: 1.3em;
+        margin-right: 5px;
+        height: 40px;
+        width: 40px;
+    }
+
+    #tweet-quote i {
+        color: white;
+    }
+
+    #new-quote {
+        float: right;
+    }
+
+    .footer {
+        text-align: center;
+        display: block;
+        margin: 15px auto 30px auto;
+        color: #fff;
+    }
+
+    .footer a {
+        text-decoration: none;
+        color: #fff;
+    }
+
+</style>
+<script>
+    var colors = ['#16a085', '#27ae60', '#2c3e50', '#f39c12', '#e74c3c', '#9b59b6', '#FB6964', '#342224', "#472E32", "#BDBB99", "#77B1A9", "#73A857"];
+    var quote = "";
+    var author = "";
+    function openURL(url) {
+        window.open(url, 'Share', 'width=550, height=400, toolbar=0, scrollbars=1 ,location=0 ,statusbar=0,menubar=0, resizable=0');
+    }
+    function getQuote() {
+        $.get("http://zhaiyan.acman.cn/api/json", function (data) {
+            quote = data.data.taici;
+            author = data.data.source;
+            $(".quote-text").animate({
+                    opacity: 0
+                }, 500,
+                function () {
+                    $(this).animate({
+                        opacity: 1
+                    }, 500);
+                    $("#text").text(quote);
+                    $("#author").text(author);
+                });
+            var color = Math.floor(Math.random() * colors.length);
+            $("body").animate({
+                color: colors[color],
+                backgroundColor: colors[color]
+            }, 1000);
+            $(".button").animate({
+                backgroundColor: colors[color]
+            }, 1000);
+
+        }, "json");
+    }
+    $(function () {
+        getQuote();
+        $("#new-quote").click(getQuote);
+        $("#tweet-quote").click(function () {
+            openURL('https://twitter.com/intent/tweet?hashtags=宅言&related=freecodecamp&text=' + encodeURIComponent('"' + quote + '" ' + author));
+
+        });
+    });
+</script>
+<body>
+<div class="quote-box">
+    <div class="quote-text">
+        <i class="fa fa-quote-left"> </i><span id="text"></span>
+        <div class="quote-author">
+            - <span id="author"></span>
+        </div>
+    </div>
+    <div class="buttons">
+        <a class="button" id="tweet-quote" title="Tweet this quote!" target="_blank">
+            <i class="fa fa-twitter"></i>
+        </a>
+        <button class="button" id="new-quote">新宅言</button>
+    </div>
+</div>
+
+
+<div class="footer"> by <a href="https://blog.ajavac.com" target="_blank">wyp0596</a></div>
+</body>
+</html>

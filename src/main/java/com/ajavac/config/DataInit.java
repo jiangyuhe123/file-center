@@ -4,6 +4,7 @@ import com.ajavac.constants.Role;
 import com.ajavac.dao.LocalAuthRepository;
 import com.ajavac.entity.LocalAuth;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,9 @@ import javax.annotation.PostConstruct;
  */
 @Component
 public class DataInit {
+
+    @Value("${server.port}")
+    private String port;
 
     private static final String adminName = "admin";
     private static final String adminPassword = "admin";
@@ -27,12 +31,13 @@ public class DataInit {
 
     @PostConstruct
     @Transactional
-    public void dataInit(){
+    public void dataInit() {
         LocalAuth localAuth = localAuthRepository.findOne(adminName);
-        if (localAuth == null){
-            localAuth = new LocalAuth(adminName,adminPassword, Role.ADMIN);
+        if (localAuth == null) {
+            localAuth = new LocalAuth(adminName, adminPassword, Role.ADMIN);
             localAuthRepository.save(localAuth);
         }
+        System.out.println("application run success in : http://localhost:" + port);
     }
 
 }
