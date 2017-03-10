@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.Range;
  */
 public class LocalAuthInfo {
 
+    private long localAuthId;
 
     @Length(min = 1, max = 32)
     private String username;
@@ -25,8 +26,13 @@ public class LocalAuthInfo {
     }
 
     public LocalAuthInfo(LocalAuth localAuth) {
+        this.localAuthId = localAuth.getLocalAuthId();
         this.type = localAuth.getRole().getType();
         this.username = localAuth.getUsername();
+    }
+
+    public long getLocalAuthId() {
+        return localAuthId;
     }
 
     public String getUsername() {
@@ -44,7 +50,8 @@ public class LocalAuthInfo {
     @Override
     public String toString() {
         return "LocalAuthInfo{" +
-                "username='" + username + '\'' +
+                "localAuthId=" + localAuthId +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", type=" + type +
                 '}';

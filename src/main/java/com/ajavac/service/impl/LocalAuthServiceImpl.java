@@ -25,7 +25,8 @@ public class LocalAuthServiceImpl implements LocalAuthService {
 
     @Override
     public boolean isUsernameExists(String username) {
-        return localAuthRepository.exists(username);
+        long count = localAuthRepository.countByUsername(username);
+        return count != 0L;
     }
 
     @Override
@@ -44,27 +45,28 @@ public class LocalAuthServiceImpl implements LocalAuthService {
     @Transactional
     public LocalAuthInfo update(LocalAuthInfo localAuthInfo) {
         String username = localAuthInfo.getUsername();
-        LocalAuth localAuth = localAuthRepository.findOne(username);
+        LocalAuth localAuth = localAuthRepository.findByUsername(username);
         if (localAuth == null) {
             throw new IdNotFoundException();
         }
+        localAuth.setPassword(localAuthInfo.getPassword());
         localAuthRepository.save(localAuth);
         return new LocalAuthInfo(localAuth);
     }
 
     @Override
     @Transactional
-    public void delete(String username) {
-        if (!isUsernameExists(username)) {
+    public void delete(long localAuthId) {
+        if (!localAuthRepository.exists(localAuthId)) {
             throw new IdNotFoundException();
         }
-        localAuthRepository.delete(username);
+        localAuthRepository.delete(localAuthId);
     }
 
     @Override
     public LocalAuthInfo login(LocalAuthInfo localAuthInfo) {
         String username = localAuthInfo.getUsername();
-        LocalAuth localAuth = localAuthRepository.findOne(username);
+        LocalAuth localAuth = localAuthRepository.findByUsername(username);
         if (localAuth == null) {
             throw new LoginException();
         }

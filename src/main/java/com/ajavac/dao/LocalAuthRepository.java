@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
  * Created by wyp0596 on 05/03/2017.
  */
 @Repository
-public interface LocalAuthRepository extends JpaRepository<LocalAuth,String> {
+public interface LocalAuthRepository extends JpaRepository<LocalAuth,Long> {
 
+    LocalAuth findByUsername(String username);
+
+    long countByUsername(String username);
 }

@@ -13,7 +13,7 @@ public interface LocalAuthService {
 
     LocalAuthInfo update(LocalAuthInfo localAuthInfo);
 
-    void delete(String username);
+    void delete(long localAuthId);
 
     LocalAuthInfo login(LocalAuthInfo localAuthInfo);
 

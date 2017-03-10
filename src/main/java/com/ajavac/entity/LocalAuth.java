@@ -12,6 +12,10 @@ import javax.persistence.*;
 public class LocalAuth {
 
     @Id
+    @GeneratedValue
+    private long localAuthId;
+
+    @Column(unique = true, updatable = false, nullable = false)
     private String username;
 
     @Column(nullable = false)
@@ -34,6 +38,14 @@ public class LocalAuth {
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    public long getLocalAuthId() {
+        return localAuthId;
+    }
+
+    public void setLocalAuthId(long localAuthId) {
+        this.localAuthId = localAuthId;
     }
 
     public Role getRole() {

@@ -13,7 +13,7 @@ public class MyFile {
 
     @Id
     @GeneratedValue
-    private long id;
+    private long myFileId;
 
     private String name;
 
@@ -39,12 +39,12 @@ public class MyFile {
         this.time = new Timestamp(System.currentTimeMillis());
     }
 
-    public long getId() {
-        return id;
+    public long getMyFileId() {
+        return myFileId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setMyFileId(long myFileId) {
+        this.myFileId = myFileId;
     }
 
     public String getName() {

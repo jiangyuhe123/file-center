@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        LocalAuth localAuth = localAuthRepository.findOne(username);
+        LocalAuth localAuth = localAuthRepository.findByUsername(username);
         if(localAuth == null){
             throw new UsernameNotFoundException("not found");
         }

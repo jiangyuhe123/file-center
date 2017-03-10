@@ -1,3 +1,10 @@
 spring:
   profiles:
     active: dev
+  http:
+    multipart:
+      max-file-size: 5MB
+my:
+  file:
+    dir: output/ #文件目录名
+    size: 5 #MB

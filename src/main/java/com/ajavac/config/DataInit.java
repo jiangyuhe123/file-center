@@ -32,7 +32,7 @@ public class DataInit {
     @PostConstruct
     @Transactional
     public void dataInit() {
-        LocalAuth localAuth = localAuthRepository.findOne(adminName);
+        LocalAuth localAuth = localAuthRepository.findByUsername(adminName);
         if (localAuth == null) {
             localAuth = new LocalAuth(adminName, adminPassword, Role.ADMIN);
             localAuthRepository.save(localAuth);
